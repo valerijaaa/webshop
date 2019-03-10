@@ -1,0 +1,51 @@
+﻿@using MbmStore.Models;
+<table class="table table-hover">
+    <tr>
+        <th>Customer</th>
+        <th>Product</th>
+        <th>Price</th>
+    </tr>
+    @foreach (Invoice i in ViewBag.Invoices)
+    {
+        <tr>
+            <td>@i.Customer.Firstname @i.Customer.Lastname</td>
+            <td>
+                @foreach (OrderItem order in i.OrderItems)
+                {
+                    <span> @order.Product.Title </span> @ShowProductType(order.Product) <br />
+                }
+                <strong> Total: </strong>
+            </td>
+            <td>
+                @foreach (OrderItem order in i.OrderItems)
+                {
+                    decimal price = order.Product.Price * order.Quantity;
+                    <span>@price.ToString("F")</span> <br />
+                }
+                @*https://stackoverflow.com/questions/164926/how-do-i-round-a-decimal-value-to-2-decimal-places-for-output-on-a-page*@
+                @*https://docs.microsoft.com/en-us/dotnet/standard/base-types/standard-numeric-format-strings#FFormatString*@
+                <strong> @i.TotalPrice.ToString("F") </strong>
+            </td>
+        </tr>
+    }
+
+
+</table>
+
+
+@helper ShowProductType(Product product)
+{
+
+    if (product is Book)
+    {
+        <span>(Book)</span>
+    }
+    else if (product is Movie)
+    {
+        <span>(Movie)</span>
+    }
+    else if (product is MusicCD)
+    {
+        <span>(MusicCD)</span>
+    }
+}

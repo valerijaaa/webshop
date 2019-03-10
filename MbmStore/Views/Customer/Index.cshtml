@@ -1,0 +1,26 @@
+﻿@using MbmStore.Models
+@{
+    ViewBag.Title = "Index";
+}
+
+
+@helper RenderCustomer(Customer customer)
+{
+
+<div class="well">
+
+    <strong>@customer.Firstname @customer.Lastname </strong>
+    <p> Address: @customer.Address , </p>
+    <p>@customer.Zip , @customer.City</p>
+    <p>@string.Join(",", customer.PhoneNumbers)</p>
+    <p><i>Customer is @customer.Age years old </i> </p>
+</div>
+   
+
+}
+
+
+@foreach (Customer c in ViewBag.Customers)
+{
+    @RenderCustomer(c)
+}
