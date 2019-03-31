@@ -1,21 +1,31 @@
-﻿@using MbmStore.Models
+﻿@using MbmStore.Models;
+@model IEnumerable<Product>
 @{
     ViewBag.Title = "Index";
 }
 
+@using (Html.BeginForm("Index", "Cart"))
+{
+    @Html.Hidden("returnUrl", Request.Url.PathAndQuery)
+    <input type="submit" class="btn btn-sucess" value="View my cart" />
+}
 
-@SortProducts(ViewBag.Products)
+
+@SortProducts(Model)
 
 @helper RenderBook(Book book)
 {
-    <div style="margin-bottom: 60px;">
-        <strong>Title: @book.Title </strong><br /> 
+    <div>
+        <strong>Title: @book.Title </strong><br />
         Author: @book.Author <br>
         Price: @String.Format("{0:0.00}", book.Price)<br />
         Publisher: @book.Publisher <br>
         isbn: @book.ISBN <br>
         <img class="img-responsive" src="/content/images/@book.ImageUrl" /> <br />
     </div>
+
+    //adding Add to cart button to the books
+    @AddToCart(book.ProductId)
 
 }
 
@@ -37,12 +47,15 @@
         </ol>
     </div>
 
-    <span style=" display: block; margin-bottom: 60px;"><b> total playing time: </b> @MusicCD.GetPlayingTime()</span> <br />
+    <span style=" display: block;"><b> total playing time: </b> @MusicCD.GetPlayingTime()</span> <br />
+
+    //adding Add to cart button to the music
+    @AddToCart(MusicCD.ProductId)
 
 }
 
 
-@helper SortProducts(List<Product> products)
+@helper SortProducts(IEnumerable<Product> products)
 {
     <div class="row">
         <div class="col-md-4">
@@ -53,13 +66,16 @@
                 {
                     Movie movie = (Movie)product;
 
-            <div style="margin-bottom: 60px;">
-                <strong>Title:@movie.Title </strong> <br />
-                Director: @movie.Director <br>
-                Price: @String.Format("{0:0.00}", movie.Price) <br /><br />
-                <img class="img-responsive" src="/content/images/@movie.ImageUrl" />
-            </div>
+                    <div>
+                        <strong>Title:@movie.Title </strong> <br />
+                        Director: @movie.Director <br>
+                        Price: @String.Format("{0:0.00}", movie.Price) <br /><br />
+                        <img class="img-responsive" src="/content/images/@movie.ImageUrl" /> <br />
+                    </div>
+                    //adding Add to cart button to the movies
+                    @AddToCart(movie.ProductId)
                 }
+
             }
         </div>
         <div class="col-md-4">
@@ -72,6 +88,7 @@
 
                     @RenderBook(book)
                 }
+
             }
         </div>
         <div class="col-md-4">
@@ -88,12 +105,33 @@
         </div>
     </div>
 
-
-
-
-
-
-
-
 }
 
+
+@helper AddToCart(int ProductId)
+//fropdwon for choosing quantity of the item
+{
+    List<SelectListItem> quantity = new List<SelectListItem>();
+    for (int i = 1; i < 11; i++)
+    {
+        var quantityItem = new SelectListItem();
+        quantityItem.Text = i.ToString();
+        quantityItem.Value = i.ToString();
+        quantity.Add(quantityItem);
+
+
+    }
+
+    //add to cart button
+    using (Html.BeginForm("AddToCart", "Cart"))
+    {
+        @Html.Hidden("ProductId", ProductId)
+        @Html.Hidden("returnUrl", Request.Url.PathAndQuery)
+
+        @Html.DropDownList("Quantity", quantity)
+        <input type="submit" class="btn btn-success" value="Add to cart" />
+
+
+
+    }
+}

@@ -14,10 +14,7 @@ namespace MbmStore.Controllers
         public ActionResult Index()
         {
 
-            ViewBag.Products = Repository.Products;
-
-
-            return View();
+            return View(Repository.Products);
         }
     }
 }

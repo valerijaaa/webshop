@@ -13,7 +13,8 @@ namespace MbmStore.Controllers
         // GET: Customer
         public ActionResult Index()
         {
-        
+
+           
             ViewBag.Customers = Repository.Customers;
             return View();
         }

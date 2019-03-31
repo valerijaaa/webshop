@@ -1,4 +1,12 @@
 ﻿@using MbmStore.Models;
+
+
+@using (Html.BeginForm())
+{
+    @Html.DropDownList("CustomerId", (IEnumerable<SelectListItem>)ViewBag.CustomerId)
+    <button type="submit"> Show invoices </button>
+}
+<br /> 
 <table class="table table-hover">
     <tr>
         <th>Customer</th>
@@ -49,3 +57,5 @@
         <span>(MusicCD)</span>
     }
 }
+
+

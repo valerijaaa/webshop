@@ -49,8 +49,9 @@ namespace MbmStore.Models
 
 
         //constructors
-        public Customer(string firstname, string lastname, string address, string zip, string city, DateTime birthdate)
+        public Customer(int customerId, string firstname, string lastname, string address, string zip, string city, DateTime birthdate)
         {
+            this.CustomerId = customerId;
             this.Firstname = firstname;
             this.Lastname = lastname;
             this.Address = address;
