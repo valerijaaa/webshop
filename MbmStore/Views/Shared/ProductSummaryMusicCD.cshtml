@@ -1,0 +1,31 @@
+﻿@using MbmStore.Models
+@model MbmStore.Models.MusicCD
+
+<div class="row">
+    <div class="col-md-2">
+        <img class="img-responsive" src="/content/images/@Model.ImageUrl" style="width:300px" />
+    </div>
+
+    <div class="col-md-4">
+        <strong>Album:</strong> @Model.Title <br />
+        <strong>Artist:</strong> @Model.Artist <br />
+        <strong>Price: </strong>@String.Format("{0:0.00}", @Model.Price)<br />
+        <div>
+            <ol>
+                @foreach (Track track in @Model.Tracks)
+                {
+                    <li>@track.Title (@track.Composer) @track.Length.Minutes:@track.Length.Seconds </li>
+                }
+            </ol>
+        </div>
+
+        <span style=" display: block;"><b> total playing time: </b> @Model.GetPlayingTime()</span> <br />
+    </div>
+
+    <div class="col-md-6">
+        @*//adding Add to cart button to the music*@
+        @Html.Partial("AddToCartPartialView", Model)
+    </div>
+
+
+    </div>

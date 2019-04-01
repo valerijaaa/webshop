@@ -1,5 +1,7 @@
 ﻿@using MbmStore.Models;
-@model IEnumerable<Product>
+@model MbmStore.ViewModels.ProductsListViewModel
+
+
 @{
     ViewBag.Title = "Index";
 }
@@ -11,127 +13,47 @@
 }
 
 
-@SortProducts(Model)
-
-@helper RenderBook(Book book)
-{
-    <div>
-        <strong>Title: @book.Title </strong><br />
-        Author: @book.Author <br>
-        Price: @String.Format("{0:0.00}", book.Price)<br />
-        Publisher: @book.Publisher <br>
-        isbn: @book.ISBN <br>
-        <img class="img-responsive" src="/content/images/@book.ImageUrl" /> <br />
-    </div>
-
-    //adding Add to cart button to the books
-    @AddToCart(book.ProductId)
-
-}
-
-@helper RenderMusicCD(MusicCD MusicCD)
-{
-
-    <strong>Album: @MusicCD.Title  </strong>
-    <p> Artist: @MusicCD.Artist</p>
-    <p><img class="img-responsive" src="/content/images/@MusicCD.ImageUrl" /></p>
-    <p>Price: @String.Format("{0:0.00}", MusicCD.Price)</p>
-
-
-    <div>
-        <ol>
-            @foreach (Track track in MusicCD.Tracks)
-            {
-                <li>@track.Title (@track.Composer) @track.Length.Minutes:@track.Length.Seconds </li>
-            }
-        </ol>
-    </div>
-
-    <span style=" display: block;"><b> total playing time: </b> @MusicCD.GetPlayingTime()</span> <br />
-
-    //adding Add to cart button to the music
-    @AddToCart(MusicCD.ProductId)
-
-}
-
-
-@helper SortProducts(IEnumerable<Product> products)
-{
     <div class="row">
-        <div class="col-md-4">
-            <h2> The Movies: </h2>
-            @foreach (Product product in products)
+        <div>
+
+            @if (Model.Products.OfType<Movie>().Count() > 0)
             {
-                if (product is Movie)
+                <h2> The movies </h2>
+                foreach (Movie movie in Model.Products.OfType<Movie>().ToList())
                 {
-                    Movie movie = (Movie)product;
-
-                    <div>
-                        <strong>Title:@movie.Title </strong> <br />
-                        Director: @movie.Director <br>
-                        Price: @String.Format("{0:0.00}", movie.Price) <br /><br />
-                        <img class="img-responsive" src="/content/images/@movie.ImageUrl" /> <br />
-                    </div>
-                    //adding Add to cart button to the movies
-                    @AddToCart(movie.ProductId)
+                    @Html.Partial("ProductSummaryMovie", movie)
                 }
-
             }
         </div>
-        <div class="col-md-4">
-            <h2> The Books: </h2>
-            @foreach (Product product in products)
+        <div>
+
+            @if (Model.Products.OfType<Book>().Count() > 0)
             {
-                if (product is Book)
+                <h2> The books </h2>
+                foreach (Book book in Model.Products.OfType<Book>().ToList())
                 {
-                    Book book = (Book)product;
-
-                    @RenderBook(book)
+                    @Html.Partial("ProductSummaryBook", book)
                 }
-
             }
         </div>
-        <div class="col-md-4">
-            <h2> The Music: </h2>
-            @foreach (Product product in products)
-            {
-                if (product is MusicCD)
-                {
-                    MusicCD musicCD = (MusicCD)product;
+        <div>
 
-                    @RenderMusicCD(musicCD)
+            @if (Model.Products.OfType<MusicCD>().Count() > 0)
+            {
+                <h2> The musicCDs </h2>
+                foreach (MusicCD musicCD in Model.Products.OfType<MusicCD>().ToList())
+                {
+                    @Html.Partial("ProductSummaryMusicCD", musicCD)
                 }
             }
         </div>
     </div>
-
-}
-
-
-@helper AddToCart(int ProductId)
-//fropdwon for choosing quantity of the item
-{
-    List<SelectListItem> quantity = new List<SelectListItem>();
-    for (int i = 1; i < 11; i++)
-    {
-        var quantityItem = new SelectListItem();
-        quantityItem.Text = i.ToString();
-        quantityItem.Value = i.ToString();
-        quantity.Add(quantityItem);
-
-
-    }
-
-    //add to cart button
-    using (Html.BeginForm("AddToCart", "Cart"))
-    {
-        @Html.Hidden("ProductId", ProductId)
-        @Html.Hidden("returnUrl", Request.Url.PathAndQuery)
-
-        @Html.DropDownList("Quantity", quantity)
-        <input type="submit" class="btn btn-success" value="Add to cart" />
+    <div>
+        @Html.PageLinks(Model.PagingInfo, x => Url.Action("Index", new { page = x, category = Model.CurrentCategory }))
+        
 
 
 
-    }
-}
+    </div>
+
+

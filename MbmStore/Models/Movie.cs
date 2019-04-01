@@ -16,18 +16,15 @@ namespace MbmStore.Models
 
 
         // constructors
-        public Movie(int productId, string title, decimal price)
-            : base(productId, title, price, null)
+        public Movie(int productId, string title, decimal price, string category)
+            : base(productId, title, price, null, category)
         {
-            this.ProductId = ProductId;
-            this.Title = title;
-            this.Price = price;
    
         }
-        public Movie(int productId,string title, decimal price, string imageUrl, string director, short released) 
-            : base(productId, title, price, imageUrl) 
+
+        public Movie(int productId,string title, decimal price, string imageUrl, string director, short released, string category) 
+            : base(productId, title, price, imageUrl, category) 
         {
-            this.ProductId = productId;
             this.Director = director;
             this.Released = released;
         }

@@ -12,18 +12,20 @@ namespace MbmStore.Models
         public string Title { get; set; }
         public decimal Price { get; set; }
         public string ImageUrl { get; set; }
+        public string Category { get; set; }
 
         //constructors
         public Product()
         {
         }
 
-        public Product(int productId, string title, decimal price, string imageUrl)
+        public Product(int productId, string title, decimal price, string imageUrl, string category)
         {
             ProductId = productId;
             Title = title;
             Price = price;
             ImageUrl = imageUrl;
+            Category = category;
         }
     }
 

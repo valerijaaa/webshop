@@ -1,55 +1,32 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>@ViewBag.Title - My ASP.NET Application</title>
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <link rel="stylesheet" href="~/Content/Site.css">
-</head>
-<body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @*@Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })*@
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="~/Content/bootstrap.css" rel="stylesheet" />
+        <link href="~/Content/bootstrap-theme.css" rel="stylesheet" />
+        <title>@ViewBag.Title</title>
+    </head>
+    <body class="container">
+        <div class="navbar navbar-inverse" role="navigation">
+            <a class="navbar-brand" href="/">Music Book Movie Store</a>
+            <ul class="nav nav-pills">
+                <li role="presentation" class="active"><a href="@Url.Action("Index", "Home")">Home</a></li>
+                <li role="presentation"><a href="@Url.Action("Index", "Catalogue")">Catalogue</a></li>
+                <li role="presentation"><a href="@Url.Action("Index", "Invoice")">Invoices</a></li>
+                <li role="presentation"><a href="@Url.Action("Index", "Customer")">Customers</a></li>
+            </ul>
+        </div>
+        <div class="row panel">
+            <div id="categories" class="col-xs-3">
+                @Html.Action("Menu", "Nav")
             </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>
-                        @Html.ActionLink("Home page", "Index", "Home")
-                    </li>
-
-                    <li>
-                        @Html.ActionLink("Catalogue", "Index", "Catalogue")
-                    </li>
-
-                    <li>
-                        @Html.ActionLink("Invoices", "Index", "Invoice")
-                    </li>
-
-                    <li>
-                        @Html.ActionLink("Customers", "Index", "Customer")
-                    </li>
-                </ul>
+            <div class="col-xs-9">
+                @RenderBody()
             </div>
         </div>
-    </div>
-
-    <div class="container body-content" style="padding-top: 80px;">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>
-    </div>
-
-  
-</body>
+    </body>
 </html>

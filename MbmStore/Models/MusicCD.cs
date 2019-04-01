@@ -21,8 +21,8 @@ namespace MbmStore.Models
         {
         }
 
-        public MusicCD(int productId, string artist, string title, decimal price, short released, string imageUrl)
-             : base(productId, title, price, imageUrl)
+        public MusicCD(int productId, string artist, string title, decimal price, short released, string imageUrl, string category)
+             : base(productId, title, price, imageUrl, category)
         {
             ProductId = productId;
             Artist = artist;

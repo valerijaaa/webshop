@@ -1,0 +1,26 @@
+﻿@model MbmStore.Models.Product
+
+
+@{ 
+    List<SelectListItem> quantity = new List<SelectListItem>();
+    for (int i = 1; i < 11; i++)
+    {
+        var quantityItem = new SelectListItem();
+        quantityItem.Text = i.ToString();
+        quantityItem.Value = i.ToString();
+        quantity.Add(quantityItem);
+    }
+}
+ 
+
+  
+@using (Html.BeginForm("AddToCart", "Cart"))
+    {
+        @Html.Hidden("ProductId", Model.ProductId)
+        @Html.Hidden("returnUrl", Request.Url.PathAndQuery)
+
+        @Html.DropDownList("Quantity", quantity)
+        <input type="submit" class="btn btn-success" value="Add to cart" />
+    
+    }
+

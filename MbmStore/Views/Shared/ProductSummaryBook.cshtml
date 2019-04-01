@@ -1,0 +1,24 @@
+﻿@model MbmStore.Models.Book
+<div class="row">
+    <div class="col-md-2">
+        <img class="img-responsive" src="/content/images/@Model.ImageUrl" style="width:300px"  /> <br />
+    </div>
+    <div class="col-md-4">
+        <strong>Title:</strong> @Model.Title <br />
+        <strong>Author: </strong> @Model.Author<br>
+        <strong>Price:</strong> @String.Format("{0:0.00}", @Model.Price)<br />
+        <strong>Publisher:</strong> @Model.Publisher (@Model.Published) <br>
+        <strong>isbn:</strong> @Model.ISBN <br>
+    </div>
+    
+    <div class="col-md-6">
+
+        @*adding Add to cart button to the books*@
+        @Html.Partial("AddToCartPartialView", Model)
+    </div>
+    
+
+</div>
+
+
+
